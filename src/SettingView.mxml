@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" addedToStage="init_handler();">
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			
+			import mx.controls.ColorPicker;
+			import mx.controls.TextInput;
+			
+			import spark.components.HGroup;
+			private function init_handler():void
+			{
+				nsTeamCount.value = GlobalData.teamCount;
+				nsStarCount.value = GlobalData.starCount;
+				refreshGrideUI();
+				
+			}
+			private function refreshGrideUI():void
+			{
+				grideView.removeAllElements();
+				
+				
+				for(var i:int=0; i < GlobalData.teamCount; i++)
+				{
+					var uiRow:HGroup = new HGroup();
+					var uiNameInput:TextInput = new TextInput();
+					uiNameInput.width = 320;
+					uiNameInput.text = String.fromCharCode(65+i)+"组";
+					uiRow.addElement(uiNameInput);
+					var uiColorPicker:ColorPicker = new ColorPicker();
+					uiRow.addElement(uiColorPicker);
+					grideView.addElement(uiRow);
+				}
+			}
+			private function nsTeamCount_change_handler():void
+			{
+				GlobalData.teamCount = nsTeamCount.value;
+				refreshGrideUI();
+			}
+			protected function btnok_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				GlobalData.teamCount = nsTeamCount.value;
+				GlobalData.starCount = nsStarCount.value;
+				this.dispatchEvent(new Event("settingsave"));
+			}
+
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="settingsave", type="flash.events.Event")]
+	</fx:Metadata>
+	<s:Panel width="100%" height="100%" title="Setting">
+		<s:Label text="组数:" fontSize="14" x="10" y="10"></s:Label>
+		<s:NumericStepper fontSize="14" x="45" y="4" id="nsTeamCount" change="nsTeamCount_change_handler()"></s:NumericStepper>
+		
+		<s:Label text="星数:" fontSize="14" x="130" y="10"></s:Label>
+		<s:NumericStepper fontSize="14" x="174" y="4" id="nsStarCount"></s:NumericStepper>
+		
+		<s:Label x="10" y="38" height="2" width="368" backgroundColor="#DDDDDD"></s:Label>
+		
+		<s:Label x="10" y="68" height="2" width="368" backgroundColor="#DDDDDD"></s:Label>
+		
+		<s:Scroller focusEnabled="false" hasFocusableChildren="true"
+					height="127"
+					x="10" 
+					y="80"
+					>
+			<s:VGroup id="grideView" width="100%" clipAndEnableScrolling="true"  gap="10" paddingRight="10">
+			</s:VGroup>
+		</s:Scroller>
+		
+		
+		
+		<s:Button y="227" label="确定" fontSize="24" click="btnok_clickHandler(event)" horizontalCenter="-20"/>
+		<s:Label x="32" y="48" text="组名"/>
+		<s:Label x="328" y="49" text="颜色"/>
+		
+	</s:Panel>
+	
+	
+</s:Group>

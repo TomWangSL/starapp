@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="600" minHeight="600" applicationComplete="applicationComplete_handler()" xmlns:local="*">
+	<fx:Script>
+		<![CDATA[
+			private var teamCount:int = 3;
+			private var starCount:int = 5;
+			private function applicationComplete_handler():void
+			{
+				refreshUI();
+			}
+			protected function setting_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				refreshUI();
+			}
+			private function refreshUI():void
+			{
+				mainView.removeAllElements();
+				for(var i:int = 0; i < teamCount; i++)
+				{
+					renderOnTeamUI();
+				}
+			}
+			private function renderOnTeamUI( ):void
+			{
+				
+			}
+			private function openSettingView():void
+			{
+				effectShowSettingView.play();
+				//settingView.y = 10;
+			}
+			private function settingsave_handler():void
+			{
+				effectHideSettingView.play();
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Move target="{settingView}" yTo="10" id="effectShowSettingView" duration="500">	</s:Move>
+		<s:Move target="{settingView}" yTo="-500" id="effectHideSettingView" duration="500"></s:Move>
+	</fx:Declarations>
+		<mx:Image source="../asserts/setting.png" x="541" y="10" click="openSettingView();">
+			
+		</mx:Image>
+		<s:HGroup id="mainView">
+			
+		</s:HGroup>
+	
+		<local:SettingView id="settingView" y="-500" settingsave="settingsave_handler();">
+			
+		</local:SettingView>
+	
+</s:Application>
